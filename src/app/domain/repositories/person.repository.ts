@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
-import { Person } from '../models/person.model';
+import { PersonType } from '../models/Person';
 
 export abstract class PersonRepository {
-  abstract getAll(): Observable<Person[]>;
-  abstract getById(id: string): Observable<Person>;
-  abstract create(person: Person): Observable<Person>;
-  abstract update(person: Person): Observable<Person>;
+  abstract getAll(): Observable<PersonType[]>;
+  abstract getById(id: string): Observable<PersonType>;
+  abstract create(person: PersonType): Observable<PersonType>;
+  abstract update(person: PersonType): Observable<PersonType>;
   abstract delete(id: string): Observable<void>;
 }

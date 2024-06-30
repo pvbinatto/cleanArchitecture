@@ -1,37 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { PersonRepository } from '../../domain/repositories/person.repository';
-import { Person } from '../../domain/models/person.model';
+import { PersonType } from '../models/Person';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class PersonHttpRepository extends PersonRepository {
-  private apiUrl = 'persons';
+
+  private apiUrl = environment.api + 'persons';
 
   constructor(private http: HttpClient) {
     super();
   }
 
-  getAll(): Observable<Person[]> {
-    return this.http.get<Person[]>(this.apiUrl);
+  getAll(): Observable<PersonType[]> {
+    return this.http.get<PersonType[]>(this.apiUrl).pipe(take(1));
   }
 
-  getById(id: string): Observable<Person> {
-    return this.http.get<Person>(`${this.apiUrl}/${id}`);
+  getById(id: string): Observable<PersonType> {
+    return this.http.get<PersonType>(`${this.apiUrl}/${id}`).pipe(take(1));
   }
 
-  create(person: Person): Observable<Person> {
-    return this.http.post<Person>(this.apiUrl, person);
+  create(person: PersonType): Observable<PersonType> {
+    return this.http.post<PersonType>(this.apiUrl, person).pipe(take(1));
   }
 
-  update(person: Person): Observable<Person> {
-    return this.http.put<Person>(`${this.apiUrl}/${person.id}`, person);
+  update(person: PersonType): Observable<PersonType> {
+    return this.http.put<PersonType>(`${this.apiUrl}/${person.id}`, person).pipe(take(1));
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(take(1));
   }
 }

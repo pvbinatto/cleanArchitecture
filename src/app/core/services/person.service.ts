@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PersonRepository } from '../../domain/repositories/person.repository';
-import { Person } from '../../domain/models/person.model';
+import { PersonType } from '../../domain/models/Person';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +10,19 @@ export class PersonService implements PersonRepository {
 
   personRepository = inject(PersonRepository);
 
-  getAll(): Observable<Person[]> {
+  getAll(): Observable<PersonType[]> {
     return this.personRepository.getAll();
   }
 
-  getById(id: string): Observable<Person> {
+  getById(id: string): Observable<PersonType> {
     return this.personRepository.getById(id);
   }
 
-  create(person: Person): Observable<Person> {
+  create(person: PersonType): Observable<PersonType> {
     return this.personRepository.create(person);
   }
 
-  update(person: Person): Observable<Person> {
+  update(person: PersonType): Observable<PersonType> {
     return this.personRepository.update(person);
   }
 

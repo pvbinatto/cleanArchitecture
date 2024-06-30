@@ -1,0 +1,29 @@
+<h1>Cars</h1>
+<form [formGroup]="form" (submit)="createCar()">
+  <div>
+    <label for="plate">Plate</label>
+    <input type="text" formControlName="plate" id="plate" />
+  </div>
+  <div>
+    <label for="model">Model</label>
+    <input type="text" formControlName="model" id="model" />
+  </div>
+  <div>
+    <label for="year">Year</label>
+    <input type="number" formControlName="year" id="year" />
+  </div>
+  <div>
+    <label for="color">Color</label>
+    <input type="text" formControlName="color" id="color" />
+  </div>
+  <div>
+    <label for="make">Make</label>
+    <input type="text" formControlName="make" id="make" />
+  </div>
+  <button type="submit">Create</button>
+</form>
+<hr />
+<h3>List of cars</h3>
+@for(car of cars; track car){
+<p>{{ car.model }} - {{ car.year }} - {{ car.plate }}</p>
+}

@@ -1,30 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, type OnInit } from '@angular/core';
-import { PersonService } from '../../../core/services/person.service';
-import { Person } from '../../../domain/models/person.model';
-import { PersonRepository } from '../../../domain/repositories/person.repository';
-import { PersonHttpRepository } from '../../../domain/repositories/person-http.repository';
-import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import Person, { PersonType } from '../../../domain/models/Person';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-person-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
-  templateUrl: './person-list.component.html',
-  providers: [
-    { provide: PersonService, useClass: PersonService },
-    { provide: PersonRepository, useClass: PersonHttpRepository },
-    HttpClientModule,
-
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './person-list.component.html'
 })
 export class PersonListComponent implements OnInit {
-  personService = inject(PersonService);
 
-  persons: Person[] = [];
+  private person = new Person();
+
+  persons: PersonType[] = [];
+  form = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl(''),
+    phone: new FormControl(''),
+  })
 
   ngOnInit(): void {
-    this.personService.getAll().subscribe((persons) => {
+    this.listPersons();
+  }
+
+  createPerson(){
+    if(this.form.valid){
+      const person = this.form.value as PersonType;
+      this.person.create(person).subscribe((person) => {
+        this.listPersons();
+        this.form.reset();
+      });
+    }
+  }
+
+  listPersons(){
+    this.person.list().subscribe((persons) => {
       this.persons = persons;
     });
   }
