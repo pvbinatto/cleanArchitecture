@@ -1,27 +1,92 @@
-# CleanArchitecture
+# Projeto Angular com Clean Architecture
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
+Este projeto foi criado utilizando o padrão Clean Architecture para organizar e desacoplar o código, facilitando a manutenção e escalabilidade do sistema.
 
-## Development server
+.cdk-overlay-container,
+.cdk-global-overlay-wrapper {
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%
+}
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 1000
+}
 
-## Code scaffolding
+.cdk-overlay-container:empty {
+  display: none
+}
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+.cdk-global-overlay-wrapper {
+  display: flex;
+  position: absolute;
+  z-index: 1000
+}
 
-## Build
+.cdk-overlay-pane {
+  position: absolute;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+  max-width: 100%;
+  max-height: 100%
+}
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+.cdk-overlay-backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0
+}
 
-## Running unit tests
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  opacity: 1
+}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+.cdk-high-contrast-active .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  opacity: .6
+}
 
-## Running end-to-end tests
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, .32)
+}
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+.cdk-overlay-transparent-backdrop {
+  transition: visibility 1ms linear, opacity 1ms linear;
+  visibility: hidden;
+  opacity: 1
+}
 
-## Further help
+.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
+  opacity: 0;
+  visibility: visible
+}
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+.cdk-overlay-backdrop-noop-animation {
+  transition: none
+}
+
+.cdk-overlay-connected-position-bounding-box {
+  position: absolute;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  min-width: 1px;
+  min-height: 1px
+}
+
+.cdk-global-scrollblock {
+  position: fixed;
+  width: 100%;
+  overflow-y: scroll
+}
